@@ -10,7 +10,6 @@ import Reviews from './Reviews';
 export const App = () => {
   return (
     <>
-      <nav></nav>
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Home />} />
