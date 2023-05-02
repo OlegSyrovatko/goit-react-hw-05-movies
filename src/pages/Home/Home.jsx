@@ -1,8 +1,27 @@
-import React from 'react';
+import { React, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import trendingMovies from '../../services/content-api';
 
-// import { Backdrop, ModalContent } from './Modal.styled';
-// https://api.themoviedb.org/3/movie/550?api_key=1bee1caa8eeb54a46f7cee2e958da6e1
 const Home = () => {
-  return <>home</>;
+  const [movies, setMovies] = useState([]);
+
+  useEffect(() => {
+    trendingMovies().then(list => {
+      setMovies(list);
+    });
+  }, []);
+  return (
+    <>
+      home <>Trending today</>
+      <>
+        {movies.map(({ id, title }) => (
+          <li key={id}>
+            {/* <Link to={`/movies/${id}`} state={{ from: location }}> */}
+            <Link to={`/movies/${id}`}>{title}</Link>
+          </li>
+        ))}
+      </>
+    </>
+  );
 };
 export default Home;
