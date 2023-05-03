@@ -12,7 +12,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      home <>Trending today</>
+      <h1>Trending today</h1>
       <>
         {movies.map(({ id, title }) => (
           <li key={id}>

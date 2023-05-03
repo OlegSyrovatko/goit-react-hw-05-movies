@@ -15,3 +15,19 @@ export const getMovieDetails = async (id) => {
   const data = await response.json();
     return data;
 };
+
+export const getMovieCredits = async (id) => {
+  const response = await fetch( 
+    `https://api.themoviedb.org/3/movie/${id}/credits${API_KEY}`
+  );
+  const data = await response.json();
+    return data;
+};
+
+export const getMovieReviews = async (id) => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/movie/${id}/reviews${API_KEY}`
+  );
+  const data = await response.json();
+    return data;
+};
