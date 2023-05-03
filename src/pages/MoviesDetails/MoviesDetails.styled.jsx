@@ -1,5 +1,20 @@
 import styled from '@emotion/styled';
 
+export const BackLink = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+  color: black;
+  text-decoration: none;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  :hover {
+    color: orangered;
+  }
+`;
+
 export const Details = styled.div`
   display: flex;
   @media screen and (max-width: 768px) {

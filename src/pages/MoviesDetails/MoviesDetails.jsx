@@ -1,9 +1,15 @@
 import { React, useEffect, useState } from 'react';
-// import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
-import { useParams, Link, Outlet } from 'react-router-dom';
+
+import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { getMovieDetails } from '../../services/content-api';
 
-import { Details, TextDetails, Genres, Add } from './MoviesDetails.styled';
+import {
+  Details,
+  TextDetails,
+  Genres,
+  Add,
+  BackLink,
+} from './MoviesDetails.styled';
 
 const MoviesDetails = () => {
   const [title, setTitle] = useState([]);
@@ -12,6 +18,8 @@ const MoviesDetails = () => {
   const [poster_path, setPoster_path] = useState(null);
   const [popularity, setPopularity] = useState(null);
   const { id } = useParams();
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/movies';
 
   useEffect(() => {
     getMovieDetails(id).then(item => {
@@ -24,6 +32,9 @@ const MoviesDetails = () => {
   }, [id]);
   return (
     <>
+      <BackLink>
+        <Link to={backLinkHref}>Back to movies</Link>
+      </BackLink>
       <Details>
         <>
           {' '}
