@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from 'react';
 import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { getMovieDetails } from '../../services/content-api';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 import {
   Details,
@@ -32,13 +33,19 @@ const MoviesDetails = () => {
   }, [location.state]);
 
   useEffect(() => {
-    getMovieDetails(id).then(item => {
-      setTitle(item.title);
-      setOverview(item.overview);
-      setGenres(item.genres);
-      setPoster_path(item.poster_path);
-      setPopularity(item.vote_average);
-    });
+    async function fetchData() {
+      Loading.circle('Loading...');
+      const { title, overview, genres, poster_path, vote_average } =
+        await getMovieDetails(id);
+      setTitle(title);
+      setOverview(overview);
+      setGenres(genres);
+      setPoster_path(poster_path);
+      setPopularity(vote_average);
+      Loading.remove();
+    }
+
+    fetchData();
   }, [id]);
   return (
     <>

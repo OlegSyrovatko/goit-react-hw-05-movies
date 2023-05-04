@@ -1,15 +1,18 @@
 import { React, useEffect, useState } from 'react';
 import { getMovieReviews } from '../../services/content-api';
 import { useParams } from 'react-router-dom';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 const Cast = () => {
   const [reviews, setReviews] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
+    Loading.circle('Loading...');
     getMovieReviews(id).then(reviews => {
       setReviews(reviews.results);
     });
+    Loading.remove();
   }, [id]);
   return (
     <>

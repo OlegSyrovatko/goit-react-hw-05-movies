@@ -2,15 +2,24 @@ import { React, useEffect, useState } from 'react';
 import { getMovieCredits } from '../../services/content-api';
 import { Ul, Li, Aboute, P } from './Cast.styled';
 import { useParams } from 'react-router-dom';
+import { Loading } from 'notiflix/build/notiflix-loading-aio';
 
 const Cast = () => {
   const [heroes, setHeroes] = useState([]);
   const { id } = useParams();
 
   useEffect(() => {
-    getMovieCredits(id).then(heroes => {
-      setHeroes(heroes.cast);
-    });
+    const fetchHeroes = async () => {
+      Loading.circle('Loading...');
+      try {
+        const response = await getMovieCredits(id);
+        setHeroes(response.cast);
+      } catch (error) {
+        console.error(error);
+      }
+      Loading.remove();
+    };
+    fetchHeroes();
   }, [id]);
   return (
     <Ul>
