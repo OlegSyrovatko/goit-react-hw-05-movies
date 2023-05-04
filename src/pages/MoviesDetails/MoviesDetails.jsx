@@ -1,5 +1,4 @@
 import { React, useEffect, useState } from 'react';
-
 import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { getMovieDetails } from '../../services/content-api';
 
@@ -17,9 +16,20 @@ const MoviesDetails = () => {
   const [genres, setGenres] = useState([]);
   const [poster_path, setPoster_path] = useState(null);
   const [popularity, setPopularity] = useState(null);
+  const [backLinkHref, setBackLinkHref] = useState('/movies');
   const { id } = useParams();
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/movies';
+
+  useEffect(() => {
+    if (location.state && location.state.from) {
+      if (location.state.from.search.indexOf('query') >= 0) {
+        setBackLinkHref('/movies' + location.state.from.search);
+      }
+      if (location.state.from.pathname === '/') {
+        setBackLinkHref('/');
+      }
+    }
+  }, [location.state]);
 
   useEffect(() => {
     getMovieDetails(id).then(item => {

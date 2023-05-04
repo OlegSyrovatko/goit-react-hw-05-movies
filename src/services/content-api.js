@@ -8,6 +8,16 @@ export const trendingMovies = async () => {
   return data.results;
 };
 
+
+export const getSearchMovies = async (q) => {
+  const response = await fetch(
+    `https://api.themoviedb.org/3/search/movie${API_KEY}&query=${q}`
+  );
+  const data = await response.json();
+    return data;
+};
+
+
 export const getMovieDetails = async (id) => {
   const response = await fetch(
     `https://api.themoviedb.org/3/movie/${id}${API_KEY}`

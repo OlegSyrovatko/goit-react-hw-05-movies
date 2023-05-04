@@ -1,10 +1,10 @@
 import { React, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { trendingMovies } from '../../services/content-api';
 
 const Home = () => {
   const [movies, setMovies] = useState([]);
-
+  const location = useLocation();
   useEffect(() => {
     trendingMovies().then(list => {
       setMovies(list);
@@ -16,8 +16,9 @@ const Home = () => {
       <>
         {movies.map(({ id, title }) => (
           <li key={id}>
-            {/* <Link to={`/movies/${id}`} state={{ from: location }}> */}
-            <Link to={`/movies/${id}`}>{title}</Link>
+            <Link to={`/movies/${id}`} state={{ from: location }}>
+              {title}
+            </Link>
           </li>
         ))}
       </>
