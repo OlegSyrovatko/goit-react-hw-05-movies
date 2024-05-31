@@ -1,4 +1,4 @@
-import { React, useState } from 'react';
+import { React, useState, useEffect } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { SearchHeader, Form, Button, Input } from './Movies.styled';
 import { getSearchMovies } from '../../services/content-api';
@@ -10,11 +10,15 @@ const Movies = () => {
   const [getted, setGetted] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const queryS = searchParams.get('query') ?? '';
-  if (queryS) {
-    getSearchMovies(queryS).then(moveis => {
-      setMovies(moveis.results);
-    });
-  }
+
+  useEffect(() => {
+    if (queryS) {
+      getSearchMovies(queryS).then(moveis => {
+        setMovies(moveis.results);
+      });
+    }
+  }, [queryS]);
+
   const location = useLocation();
 
   const handleChange = e => {
